@@ -13,5 +13,4 @@ int main() {
     Plane p1(4,0415, 0530, 0452, 536);
     showPlane(p1);
 
-    return 0;
 }
