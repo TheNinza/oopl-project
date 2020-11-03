@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 #ifndef PLANE_H
@@ -14,6 +15,7 @@ private:
     int scheduledArrival;
     int scheduledDeparture;
     bool isLanded;
+    string status;
     
 public:
 
@@ -27,6 +29,7 @@ public:
     int getScheduledArrival();
     int getScheduledDeparture();
     bool getIsLanded();
+    string getStatus();
 
     // Setter Functions
     void setId(int val);
@@ -35,6 +38,7 @@ public:
     void setScheduledArrival(int val);
     void setScheduledDeparture(int val);
     void setIsLanded(bool val);
+    void setStatus();
 
     // Friend Functions
     friend void showPlane(Plane &p);
@@ -92,6 +96,8 @@ void Plane::setScheduledDeparture(int val){
 void Plane::setIsLanded(bool val){
     isLanded = val;
 }
+
+//setStatus definition
 
 void showPlane(Plane &p){
     cout << "id: " << p.id << '\n'
