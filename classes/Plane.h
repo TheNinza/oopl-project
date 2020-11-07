@@ -38,7 +38,7 @@ public:
     void setScheduledArrival(int val);
     void setScheduledDeparture(int val);
     void setIsLanded(bool val);
-    void setStatus();
+    void setStatus(string s);
 
     // Friend Functions
     friend void showPlane(Plane &p);
@@ -73,6 +73,10 @@ bool Plane::getIsLanded(){
     return isLanded;
 }
 
+string Plane::getStatus(){
+    return status;
+}
+
 void Plane::setId(int val){
     id = val;
 }
@@ -95,6 +99,10 @@ void Plane::setScheduledDeparture(int val){
 
 void Plane::setIsLanded(bool val){
     isLanded = val;
+}
+
+void Plane::setStatus(string s){
+    status = s;
 }
 
 //setStatus definition
