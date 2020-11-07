@@ -2,7 +2,7 @@
 #define AIRPORTFACILITIES_H
 
 class Airportfacilities {
-private:
+protected:
     // Data
     int id;
     bool occupied;
@@ -22,6 +22,8 @@ public:
     bool getOccupied();
     int getOccupiedByPlane();
 
+    // Custom Functions
+    void reAssign(Airportfacilities & b);
 
 };
 
@@ -53,5 +55,13 @@ int Airportfacilities::getOccupiedByPlane(){
     return occupiedByPlane;
 }
 
+void Airportfacilities::reAssign(Airportfacilities & a){
+    a.setOccupied(occupied);
+    a.setOccupiedByPlane(occupiedByPlane);
+
+    // resetting the datas
+    this->setOccupied(false);
+    this->setOccupiedByPlane(-1);
+}
 
 #endif
