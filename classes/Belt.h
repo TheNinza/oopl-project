@@ -3,7 +3,7 @@
 #ifndef BELT_H
 #define BELT_H
 
-class Belt : protected Airportfacilities{
+class Belt : public Airportfacilities{
 
 public:
     Belt(int id){

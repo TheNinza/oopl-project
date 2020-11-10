@@ -1,3 +1,5 @@
+#include "Plane.h"
+
 #ifndef AIRPORTFACILITIES_H
 #define AIRPORTFACILITIES_H
 
@@ -22,6 +24,7 @@ public:
 
     // Custom Functions
     void reAssign(Airportfacilities & b);
+    int assignPlane(Plane & p);
 
 };
 
@@ -58,6 +61,12 @@ void Airportfacilities::reAssign(Airportfacilities & a){
     // resetting the datas
     this->setOccupied(false);
     this->setOccupiedByPlane(-1);
+}
+
+int Airportfacilities::assignPlane(Plane & p){
+    occupied = true;
+    occupiedByPlane = p.getId();
+    return id;
 }
 
 #endif

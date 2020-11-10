@@ -3,7 +3,7 @@
 #ifndef CHECKINCOUNTER_H
 #define CHECKINCOUNTER_H
 
-class CheckinCounter : protected Airportfacilities{
+class CheckinCounter : public Airportfacilities{
 
 public:
     CheckinCounter(int id){

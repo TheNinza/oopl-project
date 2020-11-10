@@ -13,9 +13,7 @@
     time_t t = time(0);
     tm * currTime = localtime(&t);
 
-    AllPlanes planes(*currTime);
-    AllGates gates;
-    AllCheckinCounter counters;
+
 ////////////////////////////////////
 
 ///////// Utility Functions /////////

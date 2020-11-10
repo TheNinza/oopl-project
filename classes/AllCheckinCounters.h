@@ -7,14 +7,14 @@ using namespace std;
 #ifndef ALLCHECKIN_COUNTERS
 #define ALLCHECKIN_COUNTERS
 
-class AllCheckinCounter{
+class AllCheckinCounters{
 public:
     vector <CheckinCounter> checkinCounters;
     
-    AllCheckinCounter();
+    AllCheckinCounters();
 };
 
-AllCheckinCounter::AllCheckinCounter(){
+AllCheckinCounters::AllCheckinCounters(){
     for(int i = 0; i < 15; i++){
         checkinCounters.push_back(CheckinCounter(i+1));
     }

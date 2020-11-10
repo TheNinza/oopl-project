@@ -1,4 +1,6 @@
 #include "Plane.h"
+#include "AllGates.h"
+#include "AllGates.h"
 #include <vector>
 #include <algorithm>
 
@@ -6,6 +8,11 @@ using namespace std;
 
 #ifndef ALLPLANES_H
 #define ALLPLANES_H
+
+// custom funciton for sorting
+bool sortByArrival(Plane & a, Plane &b) {
+    return a.getScheduledArrival() < b.getScheduledArrival();
+}
 
 class AllPlanes{
 public:
@@ -15,6 +22,8 @@ public:
     // providing a constructor for 
     // creating flights and their default schedule
     AllPlanes(tm &t);
+
+    void assignGates(tm &t, vector <Gate> &gates);
 };
 
 AllPlanes::AllPlanes(tm &t){
@@ -80,8 +89,25 @@ AllPlanes::AllPlanes(tm &t){
     }
     // for(auto pl: planes){
     //     showPlane(pl);
-    //     cout << endl;
+    //     cout << endl; 
     // }
+}
+
+void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
+    sort(planes.begin(), planes.end(), sortByArrival);
+    for(int i = 0; i < planes.size(); i++){
+        if(t.tm_hour * 100>= planes[i].getScheduledArrival() - 300 && t.tm_hour < planes[i].getScheduledDeparture() && !planes[i].getIsLanded()){
+            int gap = gates.size() / 2;
+            for(int j = 0; j < gates.size(); j += gap){
+                if(!gates[j].getOccupied())
+                    planes[i].setGateId(gates[j].assignPlane(planes[i]));
+                if(t.tm_hour * 100 >= planes[i].getScheduledArrival())
+                    planes[i].setIsLanded(true);
+            }
+            gap /= 2;
+            if(gap == 0) break;
+        }
+    }
 }
 
 #endif

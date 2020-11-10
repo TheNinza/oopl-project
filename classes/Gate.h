@@ -3,7 +3,7 @@
 #ifndef GATE_H
 #define GATE_H
 
-class Gate : protected Airportfacilities{
+class Gate : public Airportfacilities{
 private:
     bool isUnderMaintainance;
 public:

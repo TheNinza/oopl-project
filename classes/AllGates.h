@@ -1,5 +1,4 @@
 #include "Gate.h"
-#include "AllPlanes.h"
 #include <vector>
 
 using namespace std;
