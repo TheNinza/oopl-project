@@ -2,17 +2,20 @@
 #include <unistd.h>
 
 // Importing Classes
-#include "classes/Plane.h"
-#include "classes/Airportfacilities.h"
-#include "classes/Belt.h"
+#include "classes/AllPlanes.h"
+#include "classes/AllGates.h"
+#include "classes/AllCheckinCounters.h"
+#include "classes/AllBelts.h"
 
 ///////// Global variables /////////
 
-// Getting current time of the system
+    // Getting current time of the system
     time_t t = time(0);
     tm * currTime = localtime(&t);
 
-
+    AllPlanes planes(*currTime);
+    AllGates gates;
+    AllCheckinCounter counters;
 ////////////////////////////////////
 
 ///////// Utility Functions /////////

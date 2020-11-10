@@ -7,8 +7,9 @@ class Gate : protected Airportfacilities{
 private:
     bool isUnderMaintainance;
 public:
-
-
+    Gate(int id){
+        setId(id);
+    }
 };
 
 

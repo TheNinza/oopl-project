@@ -10,8 +10,6 @@ protected:
 public:
 
     // Constructors
-    Airportfacilities(int id);
-    
     // SetterFunctions
     void setId(int fId);
     void setOccupied(bool a);
@@ -28,8 +26,6 @@ public:
 };
 
 // Definitions of member functions and constructors in order
-
-Airportfacilities::Airportfacilities(int id): id(id), occupied(false), occupiedByPlane(-1){}
 
 void Airportfacilities::setId(int fId){
     id = fId;

@@ -6,8 +6,9 @@
 class Belt : protected Airportfacilities{
 
 public:
-
-
+    Belt(int id){
+        setId(id);
+    }
 };
 
 

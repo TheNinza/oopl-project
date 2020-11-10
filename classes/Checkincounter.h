@@ -3,10 +3,12 @@
 #ifndef CHECKINCOUNTER_H
 #define CHECKINCOUNTER_H
 
-class Belt : protected Airportfacilities{
+class CheckinCounter : protected Airportfacilities{
 
 public:
-
+    CheckinCounter(int id){
+        setId(id);
+    }
 
 };
 

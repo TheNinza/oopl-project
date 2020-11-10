@@ -15,11 +15,14 @@ private:
     int scheduledDeparture;
     bool isLanded;
     string status;
+    string from;
+    string to;
+    int GateId;
     
 public:
 
     // Constructor
-    Plane(int id, int arr, int dep, int sArr, int sDep);
+    Plane(int id, int arr, int dep, int sArr, int sDep,/*  bool isL, string st, */ string f, string t);
 
     // Getter Functions
     int getId();
@@ -29,6 +32,9 @@ public:
     int getScheduledDeparture();
     bool getIsLanded();
     string getStatus();
+    string getFrom();
+    string getTo();
+    int getGAteId();
 
     // Setter Functions
     void setId(int val);
@@ -38,6 +44,9 @@ public:
     void setScheduledDeparture(int val);
     void setIsLanded(bool val);
     void setStatus(string s);
+    void setFrom(string s);
+    void setTo(string s);
+    void setGateId(int gateId);
 
     // Friend Functions
     friend void showPlane(Plane &p);
@@ -45,8 +54,8 @@ public:
 
 // Definitions of member functions and constructors, in order
 
-Plane::Plane(int id, int arr, int dep, int sArr, int sDep)
-    : id(id), actualArrival(arr), actualDeparture(dep), scheduledArrival(sArr), scheduledDeparture(sDep), isLanded(false){}
+Plane::Plane(int id, int arr, int dep, int sArr, int sDep,/*  bool isL, string st, */ string f, string t)
+    : id(id), actualArrival(arr), actualDeparture(dep), scheduledArrival(sArr), scheduledDeparture(sDep), /* isLanded(isL), status(st), */ from(f), to(t) {}
 
 int Plane::getId(){
     return id;
@@ -76,6 +85,18 @@ string Plane::getStatus(){
     return status;
 }
 
+string Plane::getFrom(){
+    return from;
+}
+
+string Plane::getTo(){
+    return to;
+}
+
+int Plane::getGAteId(){
+    return GateId;
+}
+
 void Plane::setId(int val){
     id = val;
 }
@@ -102,6 +123,18 @@ void Plane::setIsLanded(bool val){
 
 void Plane::setStatus(string s){
     status = s;
+}
+
+void Plane::setFrom(string s){
+    from = s;
+}
+
+void Plane::setTo(string s){
+    to = s;
+}
+
+void Plane::setGateId(int gateId){
+    GateId = gateId;
 }
 
 //setStatus definition
