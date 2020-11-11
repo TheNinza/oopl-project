@@ -1,5 +1,7 @@
 // Importing libraries
 #include <unistd.h>
+#include <vector>
+#include <algorithm>
 
 // Importing Classes
 #include "classes/AllPlanes.h"
@@ -18,6 +20,9 @@
 
 ///////// Utility Functions /////////
     //   No utility functions yet
+
+
+
 /////////////////////////////////////
 
 //////////// Screens ////////////////
@@ -176,15 +181,23 @@ void modeSelectionScreen(){
 }
 
 void initiateApp(){
-    system("clear");
-    cout << "\n\n\t\t\tWelcome to the\n\t\tAutomatic Airport Management System" << endl;
-    cout<< "\n\n\nPress ENTER to continue" << endl;
-    getchar();
-    modeSelectionScreen();
-    loadingScreen();
-    crudScreen();
+    // system("clear");
+    // cout << "\n\n\t\t\tWelcome to the\n\t\tAutomatic Airport Management System" << endl;
+    // cout<< "\n\n\nPress ENTER to continue" << endl;
+    // getchar();
+    // modeSelectionScreen();
+    // loadingScreen();
+    AllPlanes allPlanes(*currTime);
+    AllGates allGates;
+    allPlanes.assignGates(*currTime, allGates.gates);
+    for(int i = 0; i < allGates.gates.size(); i++){
+        cout << allGates.gates[i].getOccupiedByPlane() << endl;
+    }
+
+    // crudScreen();
 }
 
 int main() {
+    
     initiateApp();
 }

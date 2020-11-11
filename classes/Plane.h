@@ -34,7 +34,7 @@ public:
     string getStatus();
     string getFrom();
     string getTo();
-    int getGAteId();
+    int getGateId();
 
     // Setter Functions
     void setId(int val);
@@ -55,7 +55,7 @@ public:
 // Definitions of member functions and constructors, in order
 
 Plane::Plane(int id, int arr, int dep, int sArr, int sDep,/*  bool isL, string st, */ string f, string t)
-    : id(id), actualArrival(arr), actualDeparture(dep), scheduledArrival(sArr), scheduledDeparture(sDep), /* isLanded(isL), status(st), */ from(f), to(t) {}
+    : id(id), actualArrival(arr), actualDeparture(dep), scheduledArrival(sArr), scheduledDeparture(sDep),  isLanded(false), /*status(st), */ from(f), to(t), GateId(-1) {}
 
 int Plane::getId(){
     return id;
@@ -93,7 +93,7 @@ string Plane::getTo(){
     return to;
 }
 
-int Plane::getGAteId(){
+int Plane::getGateId(){
     return GateId;
 }
 

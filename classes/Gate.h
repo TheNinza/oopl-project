@@ -9,6 +9,8 @@ private:
 public:
     Gate(int id){
         setId(id);
+        setOccupied(false);
+        setOccupiedByPlane(-1);
     }
 };
 
