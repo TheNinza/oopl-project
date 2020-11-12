@@ -39,6 +39,87 @@ void reAssignResources(){
 /////////////////////////////////////
 
 //////////// Screens ////////////////
+
+void deleteScreen(string s){
+    system("clear");
+    cout << "\n\n" << endl;
+    int id;
+linkA:
+    cout << "\tEnter the id for which the entry is to be deleted: ";
+    cin >> id;
+    if(s == "plane"){
+        auto it = allPlanes.planes.begin();
+        auto it2 = allPlanes.planes.begin();
+        for(int i = 0; i < allPlanes.planes.size(); i++){
+            it2++;
+            if(allPlanes.planes[i].getId() == id){
+                allPlanes.planes.erase(it + i);
+                cout << "\nDeleted" << endl;
+                break;
+            }
+        }
+        if(it2 == allPlanes.planes.end()){
+            cout << "\n\n\tId not found" << endl;
+            sleep(2);
+            goto linkA;
+        }
+        
+    }
+    if(s == "gate"){
+        auto it = allGates.gates.begin();
+        auto it2 = allGates.gates.begin();
+        for(int i = 0; i < allGates.gates.size(); i++){
+            it2++;
+            if(allGates.gates[i].getId() == id){
+                allGates.gates.erase(it + i);
+                cout << "\nDeleted" << endl;
+                break;
+            }
+        }
+        if(it2 == allGates.gates.end()){
+            cout << "\n\n\tId not found" << endl;
+            sleep(2);
+            goto linkA;
+        }
+    }
+    if(s == "belt"){
+        auto it = allBelts.belts.begin();
+        auto it2 = allBelts.belts.begin();
+        for(int i = 0; i < allBelts.belts.size(); i++){
+            it2++;
+            if(allBelts.belts[i].getId() == id){
+                allBelts.belts.erase(it + i);
+                cout << "\nDeleted" << endl;
+                break;
+            }
+        }
+        if(it2 == allBelts.belts.end()){
+            cout << "\n\n\tId not found" << endl;
+            sleep(2);
+            goto linkA;
+        }
+    }
+    if(s == "checkinCounter"){
+        auto it = allCheckinCounters.checkinCounters.begin();
+        auto it2 = allCheckinCounters.checkinCounters.begin();
+        for(int i = 0; i < allCheckinCounters.checkinCounters.size(); i++){
+            it2++;
+            if(allCheckinCounters.checkinCounters[i].getId() == id){
+                allCheckinCounters.checkinCounters.erase(it + i);
+                cout << "\nDeleted" << endl;
+                break;
+            }
+        }
+        if(it2 == allCheckinCounters.checkinCounters.end()){
+            cout << "\n\n\tId not found" << endl;
+            sleep(2);
+            goto linkA;
+        }
+    }
+    reAssignResources();
+    sleep(2);
+}
+
 void updateFlightScreen(){
 link1:
     system("clear");
@@ -387,7 +468,6 @@ void crudScreen(){
         //     break;
         // }
         updateFlightScreen();
-        crudScreen();
         break;
     case 3:
         // Create Data Screen
@@ -412,7 +492,6 @@ void crudScreen(){
         default:
             break;
         }
-        crudScreen();
         break;
     case 4:
         // Delete Airport Data
@@ -421,11 +500,16 @@ void crudScreen(){
         {
         case 1:
             // delete flight schedule screen
+            deleteScreen("plane");
             break;
         case 2:
             // delete checkin counter screen
+            deleteScreen("checkinCounter");
+            break;
         case 3:
             // delete flight gate screen
+            deleteScreen("gate");
+            break;
         case 9:
             crudScreen();
             break;
@@ -440,6 +524,7 @@ void crudScreen(){
         cout << "\n\tWrong Option";
         goto link1;
     }
+    crudScreen();
 }
 
 void modeSelectionScreen(){
@@ -466,6 +551,9 @@ void modeSelectionScreen(){
 void initiateApp(){
     system("clear");
     cout << "\n\n\t\t\tWelcome to the\n\t\tAutomatic Airport Management System" << endl;
+    cout << "\n\n\n  Project By:" << endl;
+    cout << "  Taneshqa Jaiprakash Singh\t2019BCS-083" << endl;
+    cout << "  Nikhil Kumar Gupta\t        2019BCS-036" << endl;
     cout<< "\n\n\nPress ENTER to continue" << endl;
     getchar();
     modeSelectionScreen();
