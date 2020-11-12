@@ -1,5 +1,4 @@
 #include "Belt.h"
-#include "AllPlanes.h"
 #include <vector>
 
 using namespace std;
@@ -15,7 +14,7 @@ public:
 };
 
 AllBelts::AllBelts(){
-    for(int i = 0; i < 15; i++){
+    for(int i = 0; i < 10; i++){
         belts.push_back(Belt(i+1));
     }
 }

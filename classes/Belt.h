@@ -8,6 +8,8 @@ class Belt : public Airportfacilities{
 public:
     Belt(int id){
         setId(id);
+        setOccupied(false);
+        setOccupiedByPlane(-1);
     }
 };
 

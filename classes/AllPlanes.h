@@ -1,6 +1,7 @@
 #include "Plane.h"
 #include "AllGates.h"
 #include "AllCheckinCounters.h"
+#include "AllBelts.h"
 #include <vector>
 #include <algorithm>
 
@@ -29,6 +30,7 @@ public:
 
     void assignGates(tm &t, vector <Gate> &gates);
     void assignCounters(tm &t, vector <CheckinCounter> & counters);
+    void assignBelts(tm &t, vector <Belt> & belts);
 };
 
 AllPlanes::AllPlanes(tm &t){
@@ -154,41 +156,39 @@ void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
         // for planes already departed
         // remove there gateId and set gate to maintainance if it's been less than 30 min since departure
 
-        tempCurrentTime = currentTime - 30;
-        if(tempCurrentTime % 100 > 59){
-            int timeDeductionOffset = 100 - (tempCurrentTime % 100);
-            tempCurrentTime = (tempCurrentTime / 100) * 100 + (60 - timeDeductionOffset);
-        }
+        // tempCurrentTime = currentTime - 30;
+        // if(tempCurrentTime % 100 > 59){
+        //     int timeDeductionOffset = 100 - (tempCurrentTime % 100);
+        //     tempCurrentTime = (tempCurrentTime / 100) * 100 + (60 - timeDeductionOffset);
+        // }
 
-        if(tempCurrentTime < 0){
-            tempCurrentTime += 2400;
-        }
+        // if(tempCurrentTime < 0){
+        //     tempCurrentTime += 2400;
+        // }
 
-        if(planes[i].getScheduledDeparture() < currentTime){
-            if(planes[i].getGateId() != -1){
-                for(int j = 0; j < gates.size(); j++){
-                    if(gates[j].getId() == planes[i].getGateId()){
-                        gates[j].setId(-1);
-                        planes[i].setGateId(-1);
+        // if(planes[i].getScheduledDeparture() < currentTime){
+        //     if(planes[i].getGateId() != -1){
+        //         for(int j = 0; j < gates.size(); j++){
+        //             if(gates[j].getId() == planes[i].getGateId()){
+        //                 gates[j].setId(-1);
+        //                 planes[i].setGateId(-1);
 
-                        if(planes[i].getScheduledDeparture() >= tempCurrentTime){
-                            gates[j].setIsUnderMaintainance(true);
-                        }
-                        else{
-                            gates[j].setIsUnderMaintainance(false);
-                        }
-                    }
-                }
-            }
+        //                 if(planes[i].getScheduledDeparture() >= tempCurrentTime){
+        //                     gates[j].setIsUnderMaintainance(true);
+        //                 }
+        //                 else{
+        //                     gates[j].setIsUnderMaintainance(false);
+        //                 }
+        //             }
+        //         }
+        //     }
             
-        }
-
-
+        // }
     }
 }
 
 void AllPlanes::assignCounters(tm &t, vector <CheckinCounter> & counters){
-    sort(planes.begin(), planes.end(), sortByArrival);
+    sort(planes.begin(), planes.end(), sortByDeparture);
 
     int currentTime = (t.tm_hour * 100) + t.tm_min;
 
@@ -207,18 +207,74 @@ void AllPlanes::assignCounters(tm &t, vector <CheckinCounter> & counters){
             }
         }
         // removing counters for already departed flights
-        else {
-            if(planes[i].getCounterId() != 1){
-                for(int j = 0; j < counters.size(); j++){
-                    if(counters[j].getOccupiedByPlane() == planes[i].getId()){
-                        counters[j].setOccupiedByPlane(-1);
-                        counters[j].setOccupied(false);
-                        break;
-                    }
+        // else {
+        //     if(planes[i].getCounterId() != 1){
+        //         for(int j = 0; j < counters.size(); j++){
+        //             if(counters[j].getOccupiedByPlane() == planes[i].getId()){
+        //                 counters[j].setOccupiedByPlane(-1);
+        //                 counters[j].setOccupied(false);
+        //                 break;
+        //             }
+        //         }
+        //         planes[i].setCounterId(-1);
+        //     }
+        // }
+    }
+
+}
+
+void AllPlanes::assignBelts(tm &t, vector <Belt> & belts){
+    sort(planes.begin(), planes.end(), sortByArrival);
+
+    int currentTime = (t.tm_hour * 100) + t.tm_min;
+
+    for(int i = 0; i < planes.size(); i++){
+        
+        // for already arrived flights
+        int tempCurrentTime = currentTime - 30;
+        if(tempCurrentTime % 100 > 59){
+            int timeOffset = 100 - (tempCurrentTime % 100);
+            tempCurrentTime = (tempCurrentTime/100) * 100 + 60 - timeOffset;
+        }
+
+        if(planes[i].getScheduledArrival() <= currentTime && planes[i].getScheduledArrival() > tempCurrentTime && planes[i].getBeltId() == -1){
+            for(int j = 0; j < belts.size(); j++){
+                if(!belts[j].getOccupied()){
+                    planes[i].setBeltId(belts[j].assignPlane(planes[i]));
+                    break;
                 }
-                planes[i].setCounterId(-1);
             }
         }
+
+        // for arriving flights belts can be assigned 15 min earlier
+        tempCurrentTime = currentTime + 15;
+        if(tempCurrentTime % 100 > 59){
+            tempCurrentTime += 100;
+            tempCurrentTime -= 60;
+        }
+
+        if(planes[i].getScheduledArrival() > currentTime && planes[i].getScheduledArrival() <= tempCurrentTime && planes[i].getBeltId() == -1){
+            for(int j = 0; j < belts.size(); j++){
+                if(!belts[j].getOccupied()){
+                    planes[i].setBeltId(belts[j].assignPlane(planes[i]));
+                    break;
+                }
+            }
+        }
+        // Removing belts for all other planes who didn't fall in the above time intervals
+        // else {
+        //     if(planes[i].getBeltId() != 1){
+        //         for(int j = 0; j < belts.size(); j++){
+        //             if(belts[j].getOccupiedByPlane() == planes[i].getId()){
+        //                 belts[j].setOccupiedByPlane(-1);
+        //                 belts[j].setOccupied(false);
+        //                 break;
+        //             }
+        //         }
+        //         planes[i].setBeltId(-1);
+        //     }
+        // }
+
     }
 
 }

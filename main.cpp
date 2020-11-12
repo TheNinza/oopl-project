@@ -191,10 +191,13 @@ void initiateApp(){
     AllPlanes allPlanes(*currTime);
     AllGates allGates;
     AllCheckinCounters allCheckinCounters;
+    AllBelts allBelts;
+
     allPlanes.assignGates(*currTime, allGates.gates);
     allPlanes.assignCounters(*currTime, allCheckinCounters.checkinCounters);
-    for(int i = 0; i < allCheckinCounters.checkinCounters.size(); i++){
-        cout << allCheckinCounters.checkinCounters[i].getOccupiedByPlane() << endl;
+    allPlanes.assignBelts(*currTime, allBelts.belts);
+    for(int i = 0; i < allBelts.belts.size(); i++){
+        cout << allBelts.belts[i].getOccupiedByPlane() << endl;
     }
 
     // crudScreen();
