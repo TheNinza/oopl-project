@@ -11,7 +11,17 @@ public:
         setId(id);
         setOccupied(false);
         setOccupiedByPlane(-1);
+        isUnderMaintainance = false;
     }
+
+    bool getIsUnderMaintainance(){
+        return isUnderMaintainance;
+    }
+
+    void setIsUnderMaintainance(bool value){
+        isUnderMaintainance = value;
+    }
+
 };
 
 

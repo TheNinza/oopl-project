@@ -146,26 +146,39 @@ void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
             }
         }
 
+        // for planes already departed
+        // remove there gateId and set gate to maintainance if it's been less than 30 min since departure
 
-        // int leftBoundry = planes[i].getScheduledArrival() - 300;
-        // if(leftBoundry < 0){
-        //     leftBoundry += 2400;
-        // }
+        tempCurrentTime = currentTime - 30;
+        if(tempCurrentTime % 100 > 59){
+            int timeDeductionOffset = 100 - (tempCurrentTime % 100);
+            tempCurrentTime = (tempCurrentTime / 100) * 100 + (60 - timeDeductionOffset);
+        }
 
-        // int rightBoundry = leftBoundry + 300;
-        // if(rightBoundry > 2400)
+        if(tempCurrentTime < 0){
+            tempCurrentTime += 2400;
+        }
 
-        // if(currentTime >= leftBoundry && currentTime < rightBoundry && !planes[i].getIsLanded()){
-        //     int gap = gates.size() / 2;
-        //     for(int j = 0; j < gates.size(); j += gap){
-        //         if(!gates[j].getOccupied()){
-        //             planes[i].setGateId(gates[j].assignPlane(planes[i]));
-        //             gates[j].setOccupied(true);
-        //         }
-        //     }
-        //     gap /= 2;
-        //     if(gap == 0) break;
-        // }
+        if(planes[i].getScheduledDeparture() < currentTime){
+            if(planes[i].getGateId() != -1){
+                for(int j = 0; j < gates.size(); j++){
+                    if(gates[j].getId() == planes[i].getGateId()){
+                        gates[j].setId(-1);
+                        planes[i].setGateId(-1);
+
+                        if(planes[i].getScheduledDeparture() >= tempCurrentTime){
+                            gates[j].setIsUnderMaintainance(true);
+                        }
+                        else{
+                            gates[j].setIsUnderMaintainance(false);
+                        }
+                    }
+                }
+            }
+            
+        }
+
+
     }
 }
 
