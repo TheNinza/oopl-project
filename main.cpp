@@ -16,17 +16,73 @@
     time_t t = time(0);
     tm * currTime = localtime(&t);
 
+    AllPlanes allPlanes(*currTime);
+    AllGates allGates;
+    AllCheckinCounters allCheckinCounters;
+    AllBelts allBelts;
+
 
 ////////////////////////////////////
 
 ///////// Utility Functions /////////
     //   No utility functions yet
 
-
+void reAssignResources(){
+    allPlanes.resetPlanes();
+    allGates.resetGates();
+    allCheckinCounters.resetCheckinCounters();
+    allBelts.resetBelts();
+    allPlanes.assignGates(*currTime, allGates.gates);
+    allPlanes.assignCounters(*currTime, allCheckinCounters.checkinCounters);
+    allPlanes.assignBelts(*currTime, allBelts.belts);
+}
 
 /////////////////////////////////////
 
 //////////// Screens ////////////////
+
+void createFlightScreen(){
+    system("clear");
+    cout << "\n\n" << endl;
+    int id, arrTime, depTime;
+    string from, to;
+    cout << "\t\t\tEnter an id for the plane: ";
+    cin >> id;
+    cout << "\n\t\t\tEnter arrival time: ";
+    cin >> arrTime;
+    cout << "\n\t\t\tEnter departure time: ";
+    cin >> depTime;
+    cout << "\n\t\t\tEnter Arriving from: ";
+    cin >> from;
+    cout << "\n\t\t\tEnter Departing to: ";
+    cin >> to;
+    allPlanes.createPlane(Plane(id, arrTime, depTime, arrTime, depTime, from, to));
+    cout << "Plane Created" << endl;
+    sleep(2);
+    reAssignResources();
+}
+
+void createAirPortFacilities(string s){
+    system("clear");
+    cout << "\n\n" << endl;
+    int id, arrTime, depTime;
+    string from, to;
+    cout << "\t\t\tEnter an id for the belt: ";
+    cin >> id;
+    if(s == "gate"){
+        allGates.createGate(Gate(id));
+    }
+    if(s == "belt"){
+        allBelts.createBelt(Belt(id));
+    }
+    if(s == "checkinCounter"){
+        allCheckinCounters.createCheckinCounter(CheckinCounter(id));
+    }
+    cout << "Created" << endl;
+    sleep(2);
+    reAssignResources();
+}
+
 void loadingScreen(){
     system("clear");
     short int dot = 3;
@@ -120,17 +176,23 @@ void crudScreen(){
         {
         case 1:
             // create flight schedule screen
+            createFlightScreen();
             break;
         case 2:
             // create checkin counter screen
+            createAirPortFacilities("checkinCounter");
+            break;
         case 3:
             // create flight gate screen
+            createAirPortFacilities("checkinCounter");
+            break;
         case 9:
             crudScreen();
             break;
         default:
             break;
         }
+        crudScreen();
         break;
     case 4:
         // Delete Airport Data
@@ -188,10 +250,7 @@ void initiateApp(){
     getchar();
     modeSelectionScreen();
     loadingScreen();
-    AllPlanes allPlanes(*currTime);
-    AllGates allGates;
-    AllCheckinCounters allCheckinCounters;
-    AllBelts allBelts;
+    
 
     allPlanes.assignGates(*currTime, allGates.gates);
     allPlanes.assignCounters(*currTime, allCheckinCounters.checkinCounters);
