@@ -49,6 +49,10 @@ AllPlanes::AllPlanes(tm &t){
                 if(schArr > 2400){
                     schArr -= 2400;
                 }
+                if(schArr % 100 > 60){
+                    schArr -= 60;
+                    schArr += 100;
+                }
             }
 
             int depTime = arrivalTime + 500 + rand() % 1300;
