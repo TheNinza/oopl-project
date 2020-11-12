@@ -12,6 +12,7 @@ public:
     
     AllCheckinCounters();
     void resetCheckinCounters();
+    void createCheckinCounter(CheckinCounter c);
 };
 
 AllCheckinCounters::AllCheckinCounters(){
@@ -25,6 +26,11 @@ void AllCheckinCounters::resetCheckinCounters(){
         checkinCounters[i].setOccupied(false);
         checkinCounters[i].setOccupiedByPlane(-1);
     }
+}
+
+void AllCheckinCounters::createCheckinCounter(CheckinCounter c){
+    checkinCounters.push_back(c);
+    resetCheckinCounters();
 }
 
 #endif

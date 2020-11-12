@@ -12,6 +12,7 @@ public:
     
     AllBelts();
     void resetBelts();
+     void createBelt(Belt c);
 };
 
 AllBelts::AllBelts(){
@@ -25,6 +26,11 @@ void AllBelts::resetBelts(){
         belts[i].setOccupied(false);
         belts[i].setOccupiedByPlane(-1);
     }
+}
+
+void AllBelts::createBelt(Belt c){
+    belts.push_back(c);
+    resetBelts();
 }
 
 #endif

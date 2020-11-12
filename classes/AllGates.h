@@ -12,6 +12,7 @@ public:
     
     AllGates();
     void resetGates();
+    void createGate(Gate g);
 };
 
 AllGates::AllGates(){
@@ -26,6 +27,11 @@ void AllGates::resetGates(){
         gates[i].setOccupied(false);
         gates[i].setOccupiedByPlane(-1);
     }
+}
+
+void AllGates::createGate(Gate g){
+    gates.push_back(g);
+    resetGates();
 }
 
 #endif

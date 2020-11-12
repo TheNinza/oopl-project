@@ -182,12 +182,12 @@ void modeSelectionScreen(){
 }
 
 void initiateApp(){
-    // system("clear");
-    // cout << "\n\n\t\t\tWelcome to the\n\t\tAutomatic Airport Management System" << endl;
-    // cout<< "\n\n\nPress ENTER to continue" << endl;
-    // getchar();
-    // modeSelectionScreen();
-    // loadingScreen();
+    system("clear");
+    cout << "\n\n\t\t\tWelcome to the\n\t\tAutomatic Airport Management System" << endl;
+    cout<< "\n\n\nPress ENTER to continue" << endl;
+    getchar();
+    modeSelectionScreen();
+    loadingScreen();
     AllPlanes allPlanes(*currTime);
     AllGates allGates;
     AllCheckinCounters allCheckinCounters;
@@ -200,7 +200,7 @@ void initiateApp(){
     //     cout << allBelts.belts[i].getOccupiedByPlane() << endl;
     // }
 
-    // crudScreen();
+    crudScreen();
 }
 
 int main() {

@@ -34,6 +34,9 @@ public:
     
     // resetting planes
     void resetPlanes();
+
+    // creating new plane
+    void createPlane(Plane p);
 };
 
 AllPlanes::AllPlanes(tm &t){
@@ -293,6 +296,11 @@ void AllPlanes::resetPlanes(){
         planes[i].setCounterId(-1);
         planes[i].setBeltId(-1);
     }
+}
+
+void AllPlanes::createPlane(Plane p){
+    planes.push_back(p);
+    resetPlanes();
 }
 
 #endif
