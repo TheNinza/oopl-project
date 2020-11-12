@@ -8,6 +8,8 @@ class CheckinCounter : public Airportfacilities{
 public:
     CheckinCounter(int id){
         setId(id);
+        setOccupied(false);
+        setOccupiedByPlane(-1);
     }
 
 };

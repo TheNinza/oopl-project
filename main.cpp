@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <vector>
 #include <algorithm>
+#include <ctime>
 
 // Importing Classes
 #include "classes/AllPlanes.h"
@@ -189,9 +190,11 @@ void initiateApp(){
     // loadingScreen();
     AllPlanes allPlanes(*currTime);
     AllGates allGates;
+    AllCheckinCounters allCheckinCounters;
     allPlanes.assignGates(*currTime, allGates.gates);
-    for(int i = 0; i < allGates.gates.size(); i++){
-        cout << allGates.gates[i].getOccupiedByPlane() << endl;
+    allPlanes.assignCounters(*currTime, allCheckinCounters.checkinCounters);
+    for(int i = 0; i < allCheckinCounters.checkinCounters.size(); i++){
+        cout << allCheckinCounters.checkinCounters[i].getOccupiedByPlane() << endl;
     }
 
     // crudScreen();

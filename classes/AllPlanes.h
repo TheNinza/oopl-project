@@ -1,6 +1,6 @@
 #include "Plane.h"
 #include "AllGates.h"
-#include "AllGates.h"
+#include "AllCheckinCounters.h"
 #include <vector>
 #include <algorithm>
 
@@ -14,6 +14,10 @@ bool sortByArrival(Plane & a, Plane &b) {
     return a.getScheduledArrival() < b.getScheduledArrival();
 }
 
+bool sortByDeparture(Plane & a, Plane &b) {
+    return a.getScheduledDeparture() < b.getScheduledDeparture();
+}
+
 class AllPlanes{
 public:
 
@@ -24,6 +28,7 @@ public:
     AllPlanes(tm &t);
 
     void assignGates(tm &t, vector <Gate> &gates);
+    void assignCounters(tm &t, vector <CheckinCounter> & counters);
 };
 
 AllPlanes::AllPlanes(tm &t){
@@ -180,6 +185,42 @@ void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
 
 
     }
+}
+
+void AllPlanes::assignCounters(tm &t, vector <CheckinCounter> & counters){
+    sort(planes.begin(), planes.end(), sortByArrival);
+
+    int currentTime = (t.tm_hour * 100) + t.tm_min;
+
+    for(int i = 0; i < planes.size(); i++){
+        int tempCurrentTime = currentTime + 300;
+
+        if(tempCurrentTime > 2400){
+            tempCurrentTime -= 2400;
+        }
+        if(planes[i].getScheduledDeparture() >= currentTime && planes[i].getScheduledDeparture() < tempCurrentTime && planes[i].getCounterId() == -1){
+            for(int j = 0; j < counters.size(); j++){
+                if(!counters[j].getOccupied()){
+                    planes[i].setCounterId(counters[j].assignPlane(planes[i]));
+                    break;
+                }
+            }
+        }
+        // removing counters for already departed flights
+        else {
+            if(planes[i].getCounterId() != 1){
+                for(int j = 0; j < counters.size(); j++){
+                    if(counters[j].getOccupiedByPlane() == planes[i].getId()){
+                        counters[j].setOccupiedByPlane(-1);
+                        counters[j].setOccupied(false);
+                        break;
+                    }
+                }
+                planes[i].setCounterId(-1);
+            }
+        }
+    }
+
 }
 
 #endif

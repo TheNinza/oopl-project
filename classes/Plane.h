@@ -18,6 +18,8 @@ private:
     string from;
     string to;
     int GateId;
+    int counterId;
+    int beltId;
     
 public:
 
@@ -35,6 +37,8 @@ public:
     string getFrom();
     string getTo();
     int getGateId();
+    int getCounterId();
+    int getBeltId();
 
     // Setter Functions
     void setId(int val);
@@ -47,6 +51,8 @@ public:
     void setFrom(string s);
     void setTo(string s);
     void setGateId(int gateId);
+    void setCounterId(int value);
+    void setBeltId(int value);
 
     // Friend Functions
     friend void showPlane(Plane &p);
@@ -55,7 +61,7 @@ public:
 // Definitions of member functions and constructors, in order
 
 Plane::Plane(int id, int arr, int dep, int sArr, int sDep,/*  bool isL, string st, */ string f, string t)
-    : id(id), actualArrival(arr), actualDeparture(dep), scheduledArrival(sArr), scheduledDeparture(sDep),  isLanded(false), /*status(st), */ from(f), to(t), GateId(-1) {}
+    : id(id), actualArrival(arr), actualDeparture(dep), scheduledArrival(sArr), scheduledDeparture(sDep),  isLanded(false), /*status(st), */ from(f), to(t), GateId(-1), counterId(-1), beltId(-1) {}
 
 int Plane::getId(){
     return id;
@@ -97,6 +103,14 @@ int Plane::getGateId(){
     return GateId;
 }
 
+int Plane::getCounterId(){
+    return counterId;
+}
+
+int Plane::getBeltId(){
+    return beltId;
+}
+
 void Plane::setId(int val){
     id = val;
 }
@@ -135,6 +149,14 @@ void Plane::setTo(string s){
 
 void Plane::setGateId(int gateId){
     GateId = gateId;
+}
+
+void Plane::setCounterId(int value){
+    counterId = value;
+}
+
+void Plane::setBeltId(int value){
+    beltId = value;
 }
 
 //setStatus definition
