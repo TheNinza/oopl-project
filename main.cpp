@@ -369,23 +369,24 @@ void crudScreen(){
         break;
     case 2:
         // Update Data Screen
-        x = crudShowScreen("update");
-        switch (x)
-        {
-        case 1:
-            // update flight schedule screen
-            updateFlightScreen();
-            break;
-        case 2:
-            // update checkin counter screen
-        case 3:
-            // update flight gate screen
-        case 9:
-            crudScreen();
-            break;
-        default:
-            break;
-        }
+        // x = crudShowScreen("update");
+        // switch (x)
+        // {
+        // case 1:
+        //     // update flight schedule screen
+        //     updateFlightScreen();    
+        //     break;
+        // case 2:
+        //     // update checkin counter screen
+        // case 3:
+        //     // update flight gate screen
+        // case 9:
+        //     crudScreen();
+        //     break;
+        // default:
+        //     break;
+        // }
+        updateFlightScreen();
         crudScreen();
         break;
     case 3:
