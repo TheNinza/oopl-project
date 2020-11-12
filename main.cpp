@@ -48,6 +48,17 @@ link1:
     cin >> id;
     for(int i = 0; i < allPlanes.planes.size(); i++){
         if(allPlanes.planes[i].getId() == id){
+            cout << "\n\n\tFlight details for flight: " << allPlanes.planes[i].getId() << endl;
+            cout << "Actual arrival: " << allPlanes.planes[i].getActualArrival() << endl;
+            cout << "Scheduled arrival: " << allPlanes.planes[i].getScheduledArrival() << endl;
+            cout << "Actual departure: " << allPlanes.planes[i].getActualDeparture() << endl;
+            cout << "Scheduled departure: " << allPlanes.planes[i].getScheduledDeparture() << endl;
+            cout << "Coming From: " << allPlanes.planes[i].getFrom() << endl;
+            cout << "Going To" << allPlanes.planes[i].getTo() << endl;
+            cout << "Gate: " << (allPlanes.planes[i].getGateId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getGateId()))<< endl;
+            cout << "Belt: " << (allPlanes.planes[i].getBeltId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getBeltId()))<< endl;
+            cout << "CheckinCounter: " << (allPlanes.planes[i].getCounterId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getCounterId()))<< endl << endl;
+            
             int option = -1;
             cout << "\n\t\tDo yo want to update actual arrival (1-yes/ 0-no): ";
             cin >> option;
@@ -226,7 +237,19 @@ link1:
                 }
             }
             cout << "updated" << endl;
-            sleep(2);
+             cout << "\n\n\tFlight details for flight: " << allPlanes.planes[i].getId() << endl;
+            cout << "Actual arrival: " << allPlanes.planes[i].getActualArrival() << endl;
+            cout << "Scheduled arrival: " << allPlanes.planes[i].getScheduledArrival() << endl;
+            cout << "Actual departure: " << allPlanes.planes[i].getActualDeparture() << endl;
+            cout << "Scheduled departure: " << allPlanes.planes[i].getScheduledDeparture() << endl;
+            cout << "Coming From: " << allPlanes.planes[i].getFrom() << endl;
+            cout << "Going To" << allPlanes.planes[i].getTo() << endl;
+            cout << "Gate: " << (allPlanes.planes[i].getGateId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getGateId()))<< endl;
+            cout << "Belt: " << (allPlanes.planes[i].getBeltId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getBeltId()))<< endl;
+            cout << "Belt: " << (allPlanes.planes[i].getCounterId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getCounterId()))<< endl << endl;
+            cout << "Press Enter to continue ";
+            getchar();
+            getchar();
             return;
         }
     }
