@@ -31,7 +31,6 @@ void AllGates::resetGates(){
 
 void AllGates::createGate(Gate g){
     gates.push_back(g);
-    resetGates();
 }
 
 #endif

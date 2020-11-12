@@ -300,7 +300,6 @@ void AllPlanes::resetPlanes(){
 
 void AllPlanes::createPlane(Plane p){
     planes.push_back(p);
-    resetPlanes();
 }
 
 #endif

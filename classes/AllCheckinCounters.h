@@ -30,7 +30,6 @@ void AllCheckinCounters::resetCheckinCounters(){
 
 void AllCheckinCounters::createCheckinCounter(CheckinCounter c){
     checkinCounters.push_back(c);
-    resetCheckinCounters();
 }
 
 #endif

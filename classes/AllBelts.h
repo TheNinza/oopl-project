@@ -30,7 +30,6 @@ void AllBelts::resetBelts(){
 
 void AllBelts::createBelt(Belt c){
     belts.push_back(c);
-    resetBelts();
 }
 
 #endif
