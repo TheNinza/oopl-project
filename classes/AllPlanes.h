@@ -31,6 +31,9 @@ public:
     void assignGates(tm &t, vector <Gate> &gates);
     void assignCounters(tm &t, vector <CheckinCounter> & counters);
     void assignBelts(tm &t, vector <Belt> & belts);
+    
+    // resetting planes
+    void resetPlanes();
 };
 
 AllPlanes::AllPlanes(tm &t){
@@ -281,6 +284,15 @@ void AllPlanes::assignBelts(tm &t, vector <Belt> & belts){
 
     }
 
+}
+
+void AllPlanes::resetPlanes(){
+    for(int i = 0; i < planes.size(); i++){
+        planes[i].setIsLanded(false);
+        planes[i].setGateId(-1);
+        planes[i].setCounterId(-1);
+        planes[i].setBeltId(-1);
+    }
 }
 
 #endif
