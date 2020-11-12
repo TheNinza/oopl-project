@@ -25,7 +25,6 @@
 ////////////////////////////////////
 
 ///////// Utility Functions /////////
-    //   No utility functions yet
 
 void reAssignResources(){
     allPlanes.resetPlanes();
@@ -40,6 +39,201 @@ void reAssignResources(){
 /////////////////////////////////////
 
 //////////// Screens ////////////////
+void updateFlightScreen(){
+link1:
+    system("clear");
+    cout << "\n\n" << endl;
+    int id;
+    cout << "\t\t\tEnter an id for the plane: ";
+    cin >> id;
+    for(int i = 0; i < allPlanes.planes.size(); i++){
+        if(allPlanes.planes[i].getId() == id){
+            int option = -1;
+            cout << "\n\t\tDo yo want to update actual arrival (1-yes/ 0-no): ";
+            cin >> option;
+            if(option == 1){
+                int arr;
+                cout << "\t\tEnter value: ";
+                cin >> arr;
+                allPlanes.planes[i].setActualArrival(arr);
+                reAssignResources();
+            }
+            cout << "\n\t\tDo yo want to update scheduled arrival (1-yes/ 0-no): ";
+            cin >> option;
+            if(option == 1){
+                int arr;
+            linkA:
+                cout << "\t\tEnter value: ";
+                cin >> arr;
+                // there must be atleast 5 hrs of gap between arrival and departure
+                if(abs(arr - allPlanes.planes[i].getScheduledDeparture()) < 500){
+                    cout << "There must be atleast 5 hours gap between schArr and schDep" << endl;
+                    goto linkA;
+                }
+                allPlanes.planes[i].setScheduledArrival(arr);
+                reAssignResources();
+            }
+            cout << "\n\t\tDo yo want to update actual departure (1-yes/ 0-no): ";
+            cin >> option;
+            if(option == 1){
+                int dep;
+                cout << "\t\tEnter value: ";
+                cin >> dep;
+                allPlanes.planes[i].setActualDeparture(dep);
+                reAssignResources();
+            }
+            cout << "\n\t\tDo yo want to update scheduled departure (1-yes/ 0-no): ";
+            cin >> option;
+            if(option == 1){
+                int dep;
+            linkB:
+                cout << "\t\tEnter value: ";
+                cin >> dep;
+                // there must be atleast 5 hrs of gap between arrival and departure
+                if(abs(dep - allPlanes.planes[i].getScheduledArrival()) < 500){
+                    cout << "There must be atleast 5 hours gap between schArr and schDep" << endl;
+                    goto linkB;
+                }
+                allPlanes.planes[i].setScheduledDeparture(dep);
+                reAssignResources();
+            }
+            cout << "\n\t\tDo yo want to update the TO location (1-yes/ 0-no): ";
+            cin >> option;
+            if(option == 1){
+                string value;
+                cout << "\t\tEnter value: ";
+                cin >> value;
+                allPlanes.planes[i].setTo(value);
+            }
+            cout << "\n\t\tDo yo want to update the FROM location (1-yes/ 0-no): ";
+            cin >> option;
+            if(option == 1){
+                string value;
+                cout << "\t\tEnter value: ";
+                cin >> value;
+                allPlanes.planes[i].setFrom(value);
+            }
+            if(allPlanes.planes[i].getGateId() != -1){
+                cout << "\n\t\tDo you want to change gate (1-yes/ 0-no): ";
+                cin >> option;
+                if(option == 1){
+                    for(int j = 0; j < allGates.gates.size(); j++){
+                        if(allGates.gates[j].getOccupiedByPlane() == allPlanes.planes[i].getId()){
+                            allGates.gates[j].setIsUnderMaintainance(false);
+                            allGates.gates[j].setOccupied(false);
+                            allGates.gates[j].setOccupiedByPlane(-1);
+                            break;
+                        }
+                    }
+                    int value;
+                    linkC:
+                    cout << "\t\tEnter value: ";
+                    cin >> value;
+
+                    for(int j = 0; j < allGates.gates.size(); j++){
+                        if(allGates.gates[j].getId() == value){
+                            if(allGates.gates[j].getOccupied() == true){
+                                cout << "Gate is already occupied" << endl;
+                                goto linkC;
+                                break;
+                            }
+                            else{
+                                allPlanes.planes[i].setGateId(allGates.gates[j].assignPlane(allPlanes.planes[i]));
+                                break;
+                            }
+                        }
+                        if(j == allGates.gates.size() - 1 && allGates.gates[j].getId() != value){
+                            cout << "Gate doesn't exists" << endl;
+                                goto linkC;
+                        }
+                        
+                    }
+                    
+                }
+            }
+            if(allPlanes.planes[i].getCounterId() != -1){
+                cout << "\n\t\tDo you want to change checkin counter (1-yes/ 0-no): ";
+                cin >> option;
+                if(option == 1){
+                    for(int j = 0; j < allCheckinCounters.checkinCounters.size(); j++){
+                        if(allCheckinCounters.checkinCounters[j].getOccupiedByPlane() == allPlanes.planes[i].getId()){
+                            allCheckinCounters.checkinCounters[j].setOccupied(false);
+                            allCheckinCounters.checkinCounters[j].setOccupiedByPlane(-1);
+                            break;
+                        }
+                    }
+                    int value;
+                    linkD:
+                    cout << "\t\tEnter value: ";
+                    cin >> value;
+
+                    for(int j = 0; j < allCheckinCounters.checkinCounters.size(); j++){
+                        if(allCheckinCounters.checkinCounters[j].getId() == value){
+                            if(allCheckinCounters.checkinCounters[j].getOccupied() == true){
+                                cout << "CheckinCounter is already occupied" << endl;
+                                goto linkD;
+                                break;
+                            }
+                            else{
+                                allPlanes.planes[i].setCounterId(allCheckinCounters.checkinCounters[j].assignPlane(allPlanes.planes[i]));
+                                break;
+                            }
+                        }
+                        if(j == allCheckinCounters.checkinCounters.size() - 1 && allCheckinCounters.checkinCounters[j].getId() != value){
+                            cout << "CheckinCounter doesn't exists" << endl;
+                                goto linkD;
+                        }
+                        
+                    }
+                    
+                }
+            }
+            if(allPlanes.planes[i].getBeltId() != -1){
+                cout << "\n\t\tDo you want to change luggage belt (1-yes/ 0-no): ";
+                cin >> option;
+                if(option == 1){
+                    for(int j = 0; j < allBelts.belts.size(); j++){
+                        if(allBelts.belts[j].getOccupiedByPlane() == allPlanes.planes[i].getId()){
+                            allBelts.belts[j].setOccupied(false);
+                            allBelts.belts[j].setOccupiedByPlane(-1);
+                            break;
+                        }
+                    }
+                    int value;
+                    linkE:
+                    cout << "\t\tEnter value: ";
+                    cin >> value;
+
+                    for(int j = 0; j < allBelts.belts.size(); j++){
+                        if(allBelts.belts[j].getId() == value){
+                            if(allBelts.belts[j].getOccupied() == true){
+                                cout << "Belt is already occupied" << endl;
+                                goto linkE;
+                                break;
+                            }
+                            else{
+                                allPlanes.planes[i].setCounterId(allBelts.belts[j].assignPlane(allPlanes.planes[i]));
+                                break;
+                            }
+                        }
+                        if(j == allBelts.belts.size() - 1 && allBelts.belts[j].getId() != value){
+                            cout << "Belt doesn't exists" << endl;
+                                goto linkE;
+                        }
+                        
+                    }
+                    
+                }
+            }
+            cout << "updated" << endl;
+            sleep(2);
+            return;
+        }
+    }
+    cout << "\n\n\t\t\tNo plane with this id was found" << endl;
+    sleep(1);
+    goto link1;
+}
 
 void createFlightScreen(){
     system("clear");
@@ -157,6 +351,7 @@ void crudScreen(){
         {
         case 1:
             // update flight schedule screen
+            updateFlightScreen();
             break;
         case 2:
             // update checkin counter screen
@@ -168,6 +363,7 @@ void crudScreen(){
         default:
             break;
         }
+        crudScreen();
         break;
     case 3:
         // Create Data Screen
