@@ -568,24 +568,6 @@ void crudScreen(){
         }
         break;
     case 2:
-        // Update Data Screen
-        // x = crudShowScreen("update");
-        // switch (x)
-        // {
-        // case 1:
-        //     // update flight schedule screen
-        //     updateFlightScreen();    
-        //     break;
-        // case 2:
-        //     // update checkin counter screen
-        // case 3:
-        //     // update flight gate screen
-        // case 9:
-        //     crudScreen();
-        //     break;
-        // default:
-        //     break;
-        // }
         updateFlightScreen();
         break;
     case 3:
@@ -683,11 +665,6 @@ void initiateApp(){
     allPlanes.assignGates(*currTime, allGates.gates);
     allPlanes.assignCounters(*currTime, allCheckinCounters.checkinCounters);
     allPlanes.assignBelts(*currTime, allBelts.belts);
-    // showPlaneScreen();
-    // for(int i = 0; i < allBelts.belts.size(); i++){
-    //     cout << allBelts.belts[i].getOccupiedByPlane() << endl;
-    // }
-
     crudScreen();
 }
 
