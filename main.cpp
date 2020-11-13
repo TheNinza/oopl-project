@@ -39,6 +39,39 @@ void reAssignResources(){
 /////////////////////////////////////
 
 //////////// Screens ////////////////
+void showAirPortFacilitiesScreen(string s){
+    system("clear");
+    cout << "\n\n" << endl;
+    cout << "Current Time: " << currTime->tm_hour * 100 + currTime->tm_min << endl;
+    cout << "\n\tID\t Occupied By Plane" << endl;
+    if(s == "gate"){
+        for(int i = 0; i < allGates.gates.size(); i++){
+            cout << "\t" << allGates.gates[i].getId() << "\t  ";
+            if(allGates.gates[i].getOccupied()){
+                cout << allGates.gates[i].getOccupiedByPlane();
+            }
+            else{
+                cout << "Not Occupied";
+            }
+            cout << endl;
+        }
+    }
+    if(s == "checkinCounter"){
+        for(int i = 0; i < allCheckinCounters.checkinCounters.size(); i++){
+            cout << "\t" << allCheckinCounters.checkinCounters[i].getId() << "\t  ";
+            if(allCheckinCounters.checkinCounters[i].getOccupied()){
+                cout << allCheckinCounters.checkinCounters[i].getOccupiedByPlane();
+            }
+            else{
+                cout << "Not Occupied";
+            }
+            cout << endl;
+        }
+    }
+    cout << "\n\nPress Enter to continue" << endl;
+    getchar();
+    getchar();
+}
 
 void showPlaneScreen(){
     system("clear");
@@ -84,7 +117,7 @@ void showPlaneScreen(){
     cout << "\t\t\t\t\t             Departures" << endl;   
     cout << "\t\t\t\t\t   ______________________________" << endl;
 
-    cout << "\nPlane Id\tDeparting To\tActual Departure\tScheduled Departure\tStatus\t\t      Gate\t  Checkin Counter" << endl;
+    cout << "\nPlane Id\tDeparting To\tActual Departure\tScheduled Departure\tStatus\t\t   Gate\t        Checkin Counter" << endl;
 
     for(int i = 0; i < allPlanes.planes.size(); i++){
 
@@ -97,8 +130,11 @@ void showPlaneScreen(){
                 else if(allPlanes.planes[i].getStatus() == "notAvailable"){
                     cout << "           ";
                 }
+                else if(allPlanes.planes[i].getStatus() == "counter open"){
+                    cout << "           ";
+                }
                 else{
-                    cout << "\t\t";
+                    cout << "\t\t   ";
                 }
                 cout << allPlanes.planes[i].getGateId() << "\t\t";
             }
@@ -106,7 +142,7 @@ void showPlaneScreen(){
                 cout << "Not Assigned      ";
             }
             if(allPlanes.planes[i].getCounterId() != -1){
-                cout << allPlanes.planes[i].getCounterId();
+                cout << "  \t" << allPlanes.planes[i].getCounterId();
             }
             else{
                 cout << "Not Assigned      ";
@@ -520,8 +556,10 @@ void crudScreen(){
             break;
         case 2:
             // show checkin counter screen
+            showAirPortFacilitiesScreen("checkinCounter");
         case 3:
             // show flight gate screen
+            showAirPortFacilitiesScreen("gate");
         case 9:
             crudScreen();
             break;
@@ -640,6 +678,7 @@ void initiateApp(){
     modeSelectionScreen();
     loadingScreen();
     
+
 
     allPlanes.assignGates(*currTime, allGates.gates);
     allPlanes.assignCounters(*currTime, allCheckinCounters.checkinCounters);
