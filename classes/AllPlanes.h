@@ -80,10 +80,6 @@ AllPlanes::AllPlanes(tm &t){
             planes.push_back(Plane(planeIdCount++, arrivalTime, depTime, schArr, schDep, "location " + to_string(i*10 + j), "location " + to_string(i*10 + j)));
         }
     }
-    // for(auto pl: planes){
-    //     showPlane(pl);
-    //     cout << endl; 
-    // }
 }
 
 void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
