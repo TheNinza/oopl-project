@@ -61,7 +61,7 @@ public:
 // Definitions of member functions and constructors, in order
 
 Plane::Plane(int id, int arr, int dep, int sArr, int sDep,/*  bool isL, string st, */ string f, string t)
-    : id(id), actualArrival(arr), actualDeparture(dep), scheduledArrival(sArr), scheduledDeparture(sDep),  isLanded(false), /*status(st), */ from(f), to(t), GateId(-1), counterId(-1), beltId(-1) {}
+    :status("Not Available        "), id(id), actualArrival(arr), actualDeparture(dep), scheduledArrival(sArr), scheduledDeparture(sDep),  isLanded(false), /*status(st), */ from(f), to(t), GateId(-1), counterId(-1), beltId(-1) {}
 
 int Plane::getId(){
     return id;
