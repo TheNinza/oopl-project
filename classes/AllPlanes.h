@@ -96,22 +96,25 @@ void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
             tempCurrentTime += 2400;
 
         // already landed planes
-        if(planes[i].getScheduledArrival() <= currentTime && planes[i].getScheduledArrival() > tempCurrentTime){
-            // find a gate;
-            int gap = gates.size() / 2;
-            while(planes[i].getGateId() == -1 && gap > 0){
-
-                for(int j = 0; j < gates.size(); j += gap){
-                    if(!gates[j].getOccupied()){
-                        planes[i].setGateId(gates[j].assignPlane(planes[i]));
-                        planes[i].setIsLanded(true);
-                        planes[i].setStatus("landed");
-                        break;
+        if(planes[i].getScheduledArrival() <= currentTime && planes[i].getScheduledArrival() > tempCurrentTime && planes[i].getGateId() == -1){
+            
+            int currPos = 0;
+            int maxDist = 0;
+            int x = 0, y = 0;
+            while(x < gates.size() && y < gates.size()){
+                if(gates[y].getOccupied() || y == gates.size() - 1){
+                    if(maxDist < y-x){
+                        currPos = x;
+                        
+                        maxDist =  y - x;
                     }
+                    x = y;
                 }
-
-                gap /= 2;
+                y++;
             }
+            planes[i].setGateId(gates[currPos + (maxDist / 2)].assignPlane(planes[i]));
+            planes[i].setIsLanded(true);
+            planes[i].setStatus("landed");
         }
 
         // planes to be landed
@@ -122,41 +125,49 @@ void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
             tempCurrentTime -= 2400;
         }
 
-        if(planes[i].getScheduledArrival() > currentTime && planes[i].getScheduledArrival() <= tempCurrentTime){
-            int gap = gates.size() / 2;
-            while(planes[i].getGateId() == -1 && gap > 0){
-
-                for(int j = 0; j < gates.size(); j += gap){
-                    if(!gates[j].getOccupied()){
-                        planes[i].setGateId(gates[j].assignPlane(planes[i]));
-                        planes[i].setIsLanded(false);
-                        planes[i].setStatus("gate assigned");
-                        break;
+        if(planes[i].getScheduledArrival() > currentTime && planes[i].getScheduledArrival() <= tempCurrentTime && planes[i].getGateId() == -1){
+            
+            int currPos = 0;
+            int maxDist = 0;
+            int x = 0, y = 0;
+            while(x < gates.size() && y < gates.size()){
+                if(gates[y].getOccupied() || y == gates.size() - 1){
+                    if(maxDist < y-x ){
+                        currPos = x;
+                        
+                        maxDist =  y - x;
                     }
+                    x = y;
                 }
-
-                gap /= 2;
+                y++;
             }
+            planes[i].setGateId(gates[currPos + (maxDist / 2)].assignPlane(planes[i]));
+            planes[i].setIsLanded(false);
+            planes[i].setStatus("gate assigned");
         }
 
         // planes to be departed
 
 
-        if(planes[i].getScheduledDeparture() >= currentTime && planes[i].getScheduledDeparture() < tempCurrentTime){
-            int gap = gates.size() / 2;
-            while(planes[i].getGateId() == -1 && gap > 0){
-
-                for(int j = 0; j < gates.size(); j += gap){
-                    if(!gates[j].getOccupied()){
-                        planes[i].setGateId(gates[j].assignPlane(planes[i]));
-                        planes[i].setIsLanded(true);
-                        planes[i].setStatus("counter open");
-                        break;
+        if(planes[i].getScheduledDeparture() >= currentTime && planes[i].getScheduledDeparture() < tempCurrentTime && planes[i].getGateId() == -1){
+            
+            int currPos = 0;
+            int maxDist = 0;
+            int x = 0, y = 0;
+            while(x < gates.size() && y < gates.size()){
+                if(gates[y].getOccupied() || y == gates.size() - 1){
+                    if(maxDist < y-x){
+                        currPos = x;
+                        
+                        maxDist =  y - x;
                     }
+                    x = y;
                 }
-
-                gap /= 2;
+                y++;
             }
+            planes[i].setGateId(gates[currPos + (maxDist / 2)].assignPlane(planes[i]));
+            planes[i].setIsLanded(true);
+            planes[i].setStatus("counter open");
         }
 
     }
