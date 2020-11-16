@@ -65,10 +65,14 @@ AllPlanes::AllPlanes(tm &t){
             if(depTime > 2400){
                 depTime -= 2400;
             }
+            if(depTime % 100 > 59){
+                depTime -= 60;
+                depTime += 100;
+            }
             delay = rand() % 5;
             int schDep = depTime;
             if(delay == 0 || delay == 1){
-                schDep += 5 + rand() % 84;
+                schDep += 5 + rand() % 90;
                 if(schDep % 100 > 59){
                     schDep -= 60;
                     schDep += 100;

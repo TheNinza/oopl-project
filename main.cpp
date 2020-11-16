@@ -557,9 +557,11 @@ void crudScreen(){
         case 2:
             // show checkin counter screen
             showAirPortFacilitiesScreen("checkinCounter");
+            break;
         case 3:
             // show flight gate screen
             showAirPortFacilitiesScreen("gate");
+            break;
         case 9:
             crudScreen();
             break;
