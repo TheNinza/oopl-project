@@ -420,7 +420,7 @@ link1:
                                 break;
                             }
                             else{
-                                allPlanes.planes[i].setCounterId(allBelts.belts[j].assignPlane(allPlanes.planes[i]));
+                                allPlanes.planes[i].setBeltId(allBelts.belts[j].assignPlane(allPlanes.planes[i]));
                                 break;
                             }
                         }
@@ -443,7 +443,7 @@ link1:
             cout << "Going To" << allPlanes.planes[i].getTo() << endl;
             cout << "Gate: " << (allPlanes.planes[i].getGateId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getGateId()))<< endl;
             cout << "Belt: " << (allPlanes.planes[i].getBeltId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getBeltId()))<< endl;
-            cout << "Belt: " << (allPlanes.planes[i].getCounterId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getCounterId()))<< endl << endl;
+            cout << "Checkin Counter: " << (allPlanes.planes[i].getCounterId() == -1 ?  "Not Assigned" : to_string(allPlanes.planes[i].getCounterId()))<< endl << endl;
             cout << "Press Enter to continue ";
             getchar();
             getchar();
