@@ -106,7 +106,7 @@ void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
             int maxDist = 0;
             int x = 0, y = 0;
             while(x < gates.size() && y < gates.size()){
-                if(gates[y].getOccupied() || y == gates.size() - 1){
+                if(!gates[y].getIsUnderMaintainance() && (gates[y].getOccupied() || y == gates.size() - 1)){
                     if(maxDist < y-x){
                         currPos = x;
                         
@@ -135,7 +135,7 @@ void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
             int maxDist = 0;
             int x = 0, y = 0;
             while(x < gates.size() && y < gates.size()){
-                if(gates[y].getOccupied() || y == gates.size() - 1){
+                if(!gates[y].getIsUnderMaintainance() && (gates[y].getOccupied() || y == gates.size() - 1)){
                     if(maxDist < y-x ){
                         currPos = x;
                         
@@ -159,7 +159,7 @@ void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
             int maxDist = 0;
             int x = 0, y = 0;
             while(x < gates.size() && y < gates.size()){
-                if(gates[y].getOccupied() || y == gates.size() - 1){
+                if(!gates[y].getIsUnderMaintainance() && (gates[y].getOccupied() || y == gates.size() - 1)){
                     if(maxDist < y-x){
                         currPos = x;
                         
@@ -172,6 +172,21 @@ void AllPlanes::assignGates(tm & t, vector <Gate> & gates){
             planes[i].setGateId(gates[currPos + (maxDist / 2)].assignPlane(planes[i]));
             planes[i].setIsLanded(true);
             planes[i].setStatus("counter open");
+        }
+
+        tempCurrentTime = currentTime - 30;
+        if(tempCurrentTime % 100 > 59){
+            int timeOff = 100 - tempCurrentTime % 100;
+            tempCurrentTime = (tempCurrentTime / 100 * 100) + (60 - timeOff);
+        }
+
+
+        if(planes[i].getScheduledDeparture() <= currentTime && planes[i].getScheduledDeparture() > tempCurrentTime){
+            for(int j = 0; j < gates.size(); j++){
+                if(gates[j].getId() == planes[i].getGateId()){
+                    gates[j].setIsUnderMaintainance(true);
+                }
+            }
         }
 
     }

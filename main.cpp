@@ -264,7 +264,6 @@ link1:
                 cout << "\t\tEnter value: ";
                 cin >> arr;
                 allPlanes.planes[i].setActualArrival(arr);
-                reAssignResources();
             }
             cout << "\n\t\tDo yo want to update scheduled arrival (1-yes/ 0-no): ";
             cin >> option;
@@ -279,7 +278,7 @@ link1:
                     goto linkA;
                 }
                 allPlanes.planes[i].setScheduledArrival(arr);
-                reAssignResources();
+                // reAssignResources();
             }
             cout << "\n\t\tDo yo want to update actual departure (1-yes/ 0-no): ";
             cin >> option;
@@ -288,7 +287,6 @@ link1:
                 cout << "\t\tEnter value: ";
                 cin >> dep;
                 allPlanes.planes[i].setActualDeparture(dep);
-                reAssignResources();
             }
             cout << "\n\t\tDo yo want to update scheduled departure (1-yes/ 0-no): ";
             cin >> option;
@@ -303,7 +301,7 @@ link1:
                     goto linkB;
                 }
                 allPlanes.planes[i].setScheduledDeparture(dep);
-                reAssignResources();
+                // reAssignResources();
             }
             cout << "\n\t\tDo yo want to update the TO location (1-yes/ 0-no): ";
             cin >> option;
@@ -473,7 +471,9 @@ void createFlightScreen(){
     allPlanes.createPlane(Plane(id, arrTime, depTime, arrTime, depTime, from, to));
     cout << "Plane Created" << endl;
     sleep(2);
-    reAssignResources();
+    allPlanes.assignGates(*currTime, allGates.gates);
+    allPlanes.assignCounters(*currTime, allCheckinCounters.checkinCounters);
+    allPlanes.assignBelts(*currTime, allBelts.belts);
 }
 
 void createAirPortFacilities(string s){
